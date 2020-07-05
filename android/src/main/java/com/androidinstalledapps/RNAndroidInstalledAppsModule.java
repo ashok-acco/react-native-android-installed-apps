@@ -1,29 +1,22 @@
 
 package com.androidinstalledapps;
 
-import com.facebook.react.bridge.ReactApplicationContext;
-import com.facebook.react.bridge.ReactContextBaseJavaModule;
-import com.facebook.react.bridge.ReactMethod;
-import com.facebook.react.bridge.Callback;
-import com.facebook.react.bridge.Promise;
-import com.facebook.react.bridge.WritableMap;
-import com.facebook.react.bridge.WritableArray;
-import com.facebook.react.bridge.Arguments;
-
-import android.content.pm.PackageInfo;
 import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
+import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.Promise;
+import com.facebook.react.bridge.ReactApplicationContext;
+import com.facebook.react.bridge.ReactContextBaseJavaModule;
+import com.facebook.react.bridge.ReactMethod;
+import com.facebook.react.bridge.WritableArray;
+import com.facebook.react.bridge.WritableMap;
+import com.helper.Utility;
+
 import java.io.File;
-
-import javax.annotation.Nullable;
-
-import com.helper.*;
+import java.util.List;
 
 public class RNAndroidInstalledAppsModule extends ReactContextBaseJavaModule {
 
@@ -65,6 +58,12 @@ public class RNAndroidInstalledAppsModule extends ReactContextBaseJavaModule {
         File file = new File(apkDir);
         double size = file.length();
         appInfo.putDouble("size", size);
+
+        if ((packageInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
+          appInfo.putString("type", "nonsystem");
+        } else {
+          appInfo.putString("type", "system");
+        }
 
         list.pushMap(appInfo);
       }
