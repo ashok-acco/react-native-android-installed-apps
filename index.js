@@ -14,5 +14,8 @@ module.exports = {
   },
   getSystemApps(): Promise<any> {
     return RNAndroidInstalledApps.getSystemApps();
+  },
+  getConfig(): Promise<any> {
+    return RNAndroidInstalledApps.getConfig();
   }
 };
