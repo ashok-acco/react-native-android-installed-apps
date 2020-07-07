@@ -70,6 +70,13 @@ public class RNAndroidInstalledAppsModule extends ReactContextBaseJavaModule {
         double size = file.length();
         appInfo.putDouble("size", size);
 
+        if ((packageInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
+          appInfo.putString("type", "nonsystem");
+        }
+        else {
+          appInfo.putString("type", "system");
+        }
+
         list.pushMap(appInfo);
       }
       promise.resolve(list);
