@@ -3,11 +3,13 @@ package com.androidinstalledapps;
 
 import android.app.UiModeManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Build;
 import android.telephony.TelephonyManager;
 import android.text.format.DateFormat;
@@ -159,6 +161,20 @@ public class RNAndroidInstalledAppsModule extends ReactContextBaseJavaModule {
       promise.reject(ex);
     }
 
+  }
+
+  @ReactMethod
+  public void openApp(String packageName){
+    Intent launchIntent = null;
+    try{
+      launchIntent = this.reactContext.getPackageManager().getLaunchIntentForPackage(packageName);
+    } catch (Exception ignored) {}
+
+    if(launchIntent == null){
+      this.reactContext.startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse("https://play.google.com/store/apps/details?id=" + packageName)));
+    } else {
+      this.reactContext.startActivity(launchIntent);
+    }
   }
 
   @ReactMethod
