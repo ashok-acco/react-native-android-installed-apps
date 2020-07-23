@@ -17,5 +17,8 @@ module.exports = {
   },
   getConfig(): Promise<any> {
     return RNAndroidInstalledApps.getConfig();
+  },
+  openApp(packageName): void {
+    return RNAndroidInstalledApps.openApp(packageName);
   }
 };
