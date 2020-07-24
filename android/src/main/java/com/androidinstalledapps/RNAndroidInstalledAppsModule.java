@@ -73,7 +73,7 @@ public class RNAndroidInstalledAppsModule extends ReactContextBaseJavaModule {
         appInfo.putDouble("size", size);
 
         if ((packageInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
-          appInfo.putString("type", "nonsystem");
+          appInfo.putString("type", "user");
         }
         else {
           appInfo.putString("type", "system");
